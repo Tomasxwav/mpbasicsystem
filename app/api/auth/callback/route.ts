@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
         client_id: process.env.ML_CLIENT_ID,
         client_secret: process.env.ML_CLIENT_SECRET,
         code,
-        redirect_uri: process.env.FRONTEND_URL,
+        redirect_uri: process.env.REDIRECT_URI,
         code_verifier: code,
       }),
       cache: "no-store",
