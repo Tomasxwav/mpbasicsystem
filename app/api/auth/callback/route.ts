@@ -29,7 +29,6 @@ export async function GET(request: NextRequest) {
         client_secret: process.env.ML_CLIENT_SECRET,
         code,
         redirect_uri: process.env.REDIRECT_URI,
-        code_verifier: code,
       }),
       cache: "no-store",
     })
@@ -39,9 +38,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL("/login?error=auth_failed", request.url))
     }
 
-    console.log("ML token exchange successful", await response.json())
-
     tokens = await response.json()
+    console.log("ML token exchange successful", tokens)
   } catch (err) {
     console.error("ML token exchange error:", err)
     return NextResponse.redirect(new URL("/login?error=server_error", request.url))
