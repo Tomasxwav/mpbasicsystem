@@ -1,8 +1,8 @@
 export type Product = {
   sku: string;
-  name: string;
-  description: string;
-  availability: number;
+  name?: string;
+  availability?: number;
+  description?: string;
 };
 
 export type DeniedProduct = Partial<Product> & {

@@ -1,3 +1,4 @@
+import NegadosForm from '@/components/negados-form';
 import NegadosTable from '@/components/negados-table';
 
 export default function Home() {
