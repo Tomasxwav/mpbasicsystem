@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import type { MLItem, ItemsResponse } from "@/app/api/items/route"
+import type { ItemsResponse } from "@/app/api/items/route"
+import type { MercadoLibreItem } from "@/types/meli-item"
 
 const STATUS_LABEL: Record<string, string> = {
   active: "Activo",
@@ -70,7 +71,7 @@ export default function ProductosTable() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr className="bg-mercadolibre">
-              {["", "Título", "ID", "Precio", "Stock", "Estado", ""].map((col, i) => (
+              {["", "Título", "ID", "SKU", "Precio", "Stock", "Estado", ""].map((col, i) => (
                 <th
                   key={i}
                   className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-700"
@@ -83,24 +84,24 @@ export default function ProductosTable() {
           <tbody className="divide-y divide-gray-100 bg-white">
             {loading ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-400">
+                <td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">
                   Cargando publicaciones...
                 </td>
               </tr>
             ) : error ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-sm text-red-500">
+                <td colSpan={8} className="px-4 py-8 text-center text-sm text-red-500">
                   {error}
                 </td>
               </tr>
             ) : data?.items.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-400">
+                <td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">
                   No hay publicaciones
                 </td>
               </tr>
             ) : (
-              data?.items.map((item: MLItem, i: number) => (
+              data?.items.map((item: MercadoLibreItem, i: number) => (
                 <tr
                   key={item.id}
                   className={`transition-colors hover:bg-yellow-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
@@ -122,6 +123,9 @@ export default function ProductosTable() {
                   </td>
                   <td className="px-4 py-3 font-mono text-xs font-medium text-gray-500">
                     {item.id}
+                  </td>
+                  <td className="px-4 py-3 font-mono text-xs text-gray-500">
+                    {(item.attributes.find((a) => a.id === "SELLER_SKU")?.value_name ?? item.seller_custom_field) ?? <span className="text-gray-300">—</span>}
                   </td>
                   <td className="px-4 py-3 text-sm font-semibold text-gray-900">
                     {item.currency_id}{" "}

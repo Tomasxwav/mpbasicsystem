@@ -1,5 +1,5 @@
-import { deniedProducts } from '@/mocks/productos-negados';
-
+/* import { deniedProducts } from '@/mocks/productos-negados';
+ */
 const NegadosTable = () => {
   return (
     <div className="w-full">
@@ -23,7 +23,7 @@ const NegadosTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white">
-            {deniedProducts.map((product, i) => (
+            {/* {deniedProducts.map((product, i) => (
               <tr
                 key={product.sku}
                 className={`transition-colors hover:bg-yellow-50 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
@@ -55,12 +55,12 @@ const NegadosTable = () => {
                   })}
                 </td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
 
         <div className="border-t border-gray-200 bg-gray-50 px-4 py-2 text-xs text-gray-400">
-          {deniedProducts.length} producto{deniedProducts.length !== 1 ? 's' : ''} negado{deniedProducts.length !== 1 ? 's' : ''}
+{/*           {deniedProducts.length} producto{deniedProducts.length !== 1 ? 's' : ''} negado{deniedProducts.length !== 1 ? 's' : ''} */}
         </div>
       </div>
     </div>

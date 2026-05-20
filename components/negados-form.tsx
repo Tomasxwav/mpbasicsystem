@@ -1,10 +1,10 @@
-import { DeniedProduct } from '@/types/Products';
+import { MercadoLibreItem } from '@/types/meli-item';
 
 type NegadosFormProps = {
   isEditing?: boolean;
   onSubmit: (data: any) => void;
   onCancel: () => void;
-  product?: DeniedProduct;
+  product?: MercadoLibreItem;
 };
 
 export default function NegadosForm({

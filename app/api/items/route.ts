@@ -1,26 +1,16 @@
 import { getSession } from "@/lib/session-server"
 import { NextRequest } from "next/server"
+import type { MercadoLibreItem } from "@/types/meli-item"
 
 const LIMIT = 20
 
 interface MLItemRaw {
   code: number
-  body: MLItem
-}
-
-export interface MLItem {
-  id: string
-  title: string
-  price: number
-  currency_id: string
-  available_quantity: number
-  status: string
-  thumbnail: string
-  permalink: string
+  body: MercadoLibreItem
 }
 
 export interface ItemsResponse {
-  items: MLItem[]
+  items: MercadoLibreItem[]
   paging: { total: number; offset: number; limit: number }
 }
 
@@ -43,6 +33,8 @@ export async function GET(req: NextRequest) {
     }
   )
 
+  //esto no me da la info, solo me da los ids
+
   if (!searchRes.ok) {
     return Response.json({ error: "ML API error" }, { status: searchRes.status })
   }
@@ -62,6 +54,8 @@ export async function GET(req: NextRequest) {
       cache: "no-store",
     }
   )
+
+  // aqui ya recibo la informacion completa de esos producvots
 
   const itemsRaw: MLItemRaw[] = await itemsRes.json()
   const items = itemsRaw.filter((r) => r.code === 200).map((r) => r.body)
