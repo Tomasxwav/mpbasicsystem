@@ -39,6 +39,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL("/login?error=auth_failed", request.url))
     }
 
+    console.log("ML token exchange successful", await response.json())
+
     tokens = await response.json()
   } catch (err) {
     console.error("ML token exchange error:", err)
