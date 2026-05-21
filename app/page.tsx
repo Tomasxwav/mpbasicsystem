@@ -9,15 +9,12 @@ export default function Home() {
       {/* Filters placeholder */}
       {/* <div className="mb-3 h-8 2xl:mb-6 2xl:h-12 rounded-lg border-2 border-dashed border-border" /> */}
 
-      {/* Products table */}
-
-      {/* Bottom section: form + second table */}
       <div className="grid grid-cols-1 gap-4 2xl:gap-6 lg:grid-cols-3 2xl:mb-8 mb-4">
         <div className="min-h-40 2xl:min-h-64">
           <SellerCard />
         </div>
         
-        <div className="min-h-40 2xl:min-h-64 rounded-xl border-2 border-dashed border-border lg:col-span-2">
+        <div className="flex flex-col min-h-40 2xl:min-h-64 rounded-xl border-2 border-dashed border-border lg:col-span-2">
            <ProductosTableWarning />
         </div>
       </div>

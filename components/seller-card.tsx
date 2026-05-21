@@ -57,7 +57,6 @@ export default function SellerCard() {
 
   return (
     <div className="overflow-hidden rounded-lg 2xl:rounded-xl border border-border bg-surface shadow-sm">
-      {/* Header */}
       <div className="flex items-center gap-3 border-b border-border bg-ml-navbar px-3 py-2 2xl:px-4 2xl:py-2.5">
         <div className="flex h-8 w-8 2xl:h-10 2xl:w-10 items-center justify-center rounded-full bg-ml-yellow font-bold text-sm 2xl:text-base text-gray-800">
           {user.nickname.charAt(0).toUpperCase()}
@@ -71,7 +70,6 @@ export default function SellerCard() {
         </span>
       </div>
 
-      {/* Body */}
       <div className="grid grid-cols-2 gap-x-4 gap-y-2 p-3 2xl:p-4">
         <Row label="Nombre" value={`${user.first_name} ${user.last_name}`} />
         <Row label="País" value={user.country_id} />
@@ -91,7 +89,6 @@ export default function SellerCard() {
         />
       </div>
 
-      {/* Footer */}
       <div className="border-t border-border bg-surface-alt px-3 py-1.5 2xl:px-4">
         <a
           href={user.permalink}
