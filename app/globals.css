@@ -1,28 +1,84 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-border: var(--border-color);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-ml-yellow: var(--ml-yellow);
+  --color-ml-blue: var(--ml-blue);
+  --color-ml-navy: var(--ml-navy);
+  --color-ml-navbar: var(--ml-navbar);
+  --color-ml-header-text: var(--ml-header-text);
   --color-mercadolibre: var(--mercadolibre);
+  --color-status-active-bg: var(--status-active-bg);
+  --color-status-active-fg: var(--status-active-fg);
+  --color-status-paused-bg: var(--status-paused-bg);
+  --color-status-paused-fg: var(--status-paused-fg);
+  --color-status-closed-bg: var(--status-closed-bg);
+  --color-status-closed-fg: var(--status-closed-fg);
+  --color-status-review-bg: var(--status-review-bg);
+  --color-status-review-fg: var(--status-review-fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* â”€â”€ Light mode (MercadoLibre palette) â”€â”€ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #eeeeee;
+  --foreground: #333333;
+  --surface: #ffffff;
+  --surface-alt: #f7f7f7;
+  --border-color: #e0e0e0;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+
+  --ml-yellow: #ffe600;
+  --ml-blue: #3483fa;
+  --ml-navy: #1a1a2e;
+  --ml-navbar: #ffe600;
+  --ml-header-text: #333333;
   --mercadolibre: #ffe600;
+
+  --status-active-bg: #dbeafe;
+  --status-active-fg: #1d4ed8;
+  --status-paused-bg: #fef9c3;
+  --status-paused-fg: #854d0e;
+  --status-closed-bg: #fee2e2;
+  --status-closed-fg: #dc2626;
+  --status-review-bg: #f3f4f6;
+  --status-review-fg: #4b5563;
 }
 
+/* â”€â”€ Dark mode (MercadoLibre dark palette) â”€â”€ */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1a1a;
+    --foreground: #eeeeee;
+    --surface: #2d2d2d;
+    --surface-alt: #262626;
+    --border-color: #3d3d3d;
+    --text-primary: #eeeeee;
+    --text-secondary: #999999;
+
+    --ml-navbar: #1c1c1c;
+    --ml-header-text: #ffe600;
+
+    --status-active-bg: #1e3a5f;
+    --status-active-fg: #93c5fd;
+    --status-paused-bg: #3d2e00;
+    --status-paused-fg: #fbbf24;
+    --status-closed-bg: #3d1515;
+    --status-closed-fg: #fca5a5;
+    --status-review-bg: #333333;
+    --status-review-fg: #9ca3af;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }

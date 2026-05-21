@@ -132,24 +132,31 @@ export default function ImportExcelButton({ onImportDone }: { onImportDone?: () 
 
       <button
         onClick={() => inputRef.current?.click()}
-        className="rounded border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-100"
+        className="rounded-lg bg-ml-blue px-4 py-2 text-sm font-medium text-white transition-colors hover:brightness-90"
       >
         Importar Excel
       </button>
 
       {/* Modal */}
       {state.phase !== "idle" && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-2xl rounded-xl bg-white shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-2xl rounded-xl border border-border bg-surface shadow-2xl">
 
             {/* Error */}
             {state.phase === "error" && (
               <div className="p-6">
-                <h3 className="mb-3 text-base font-semibold text-gray-800">Error al procesar el archivo</h3>
-                <pre className="mb-4 whitespace-pre-wrap rounded bg-red-50 p-3 text-xs text-red-700">{state.message}</pre>
+                <h3 className="mb-3 text-base font-semibold text-text-primary">Error al procesar el archivo</h3>
+                <pre className="mb-4 whitespace-pre-wrap rounded-lg bg-status-closed-bg p-3 text-xs text-status-closed-fg">{state.message}</pre>
                 <div className="flex justify-end gap-2">
-                  <button onClick={reset} className="rounded border border-gray-300 px-4 py-1.5 text-sm text-gray-600 hover:bg-gray-50">Cerrar</button>
-                  <button onClick={() => inputRef.current?.click()} className="rounded bg-gray-800 px-4 py-1.5 text-sm text-white hover:bg-gray-700">Seleccionar otro archivo</button>
+                  <button onClick={reset} className="rounded-lg border border-border px-4 py-1.5 text-sm text-text-secondary transition-colors hover:bg-surface-alt">
+                    Cerrar
+                  </button>
+                  <button
+                    onClick={() => inputRef.current?.click()}
+                    className="rounded-lg bg-ml-blue px-4 py-1.5 text-sm font-medium text-white transition-colors hover:brightness-90"
+                  >
+                    Seleccionar otro archivo
+                  </button>
                 </div>
               </div>
             )}
@@ -157,34 +164,36 @@ export default function ImportExcelButton({ onImportDone }: { onImportDone?: () 
             {/* Preview */}
             {state.phase === "preview" && (
               <div className="p-6">
-                <h3 className="mb-1 text-base font-semibold text-gray-800">Vista previa</h3>
-                <p className="mb-4 text-sm text-gray-500">{state.rows.length} fila(s) a actualizar</p>
-                <div className="mb-4 max-h-72 overflow-auto rounded border border-gray-200">
-                  <table className="min-w-full divide-y divide-gray-200 text-xs">
-                    <thead className="sticky top-0 bg-gray-50">
+                <h3 className="mb-1 text-base font-semibold text-text-primary">Vista previa</h3>
+                <p className="mb-4 text-sm text-text-secondary">{state.rows.length} fila(s) a actualizar</p>
+                <div className="mb-4 max-h-72 overflow-auto rounded-lg border border-border">
+                  <table className="min-w-full divide-y divide-border text-xs">
+                    <thead className="sticky top-0 bg-surface-alt">
                       <tr>
                         {["SKU", "Stock", "Precio", "Estado"].map((h) => (
-                          <th key={h} className="px-3 py-2 text-left font-semibold text-gray-600">{h}</th>
+                          <th key={h} className="px-3 py-2 text-left font-semibold text-text-secondary">{h}</th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-border bg-surface">
                       {state.rows.map((r, i) => (
-                        <tr key={i}>
-                          <td className="px-3 py-2 font-mono">{r.sku}</td>
-                          <td className="px-3 py-2">{r.stock}</td>
-                          <td className="px-3 py-2">{r.price ?? <span className="text-gray-300">—</span>}</td>
-                          <td className="px-3 py-2">{r.status ? STATUS_ES[r.status] : <span className="text-gray-300">—</span>}</td>
+                        <tr key={i} className="hover:bg-surface-alt">
+                          <td className="px-3 py-2 font-mono text-text-primary">{r.sku}</td>
+                          <td className="px-3 py-2 text-text-primary">{r.stock}</td>
+                          <td className="px-3 py-2 text-text-primary">{r.price ?? <span className="opacity-30">—</span>}</td>
+                          <td className="px-3 py-2 text-text-primary">{r.status ? STATUS_ES[r.status] : <span className="opacity-30">—</span>}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <button onClick={reset} className="rounded border border-gray-300 px-4 py-1.5 text-sm text-gray-600 hover:bg-gray-50">Cancelar</button>
+                  <button onClick={reset} className="rounded-lg border border-border px-4 py-1.5 text-sm text-text-secondary transition-colors hover:bg-surface-alt">
+                    Cancelar
+                  </button>
                   <button
                     onClick={() => handleConfirm(state.rows)}
-                    className="rounded bg-mercadolibre px-4 py-1.5 text-sm font-medium text-gray-800 hover:brightness-95"
+                    className="rounded-lg bg-ml-blue px-4 py-1.5 text-sm font-medium text-white transition-colors hover:brightness-90"
                   >
                     Confirmar actualización
                   </button>
@@ -195,34 +204,34 @@ export default function ImportExcelButton({ onImportDone }: { onImportDone?: () 
             {/* Loading */}
             {state.phase === "loading" && (
               <div className="p-10 text-center">
-                <p className="text-sm text-gray-500">Actualizando publicaciones en MercadoLibre...</p>
-                <p className="mt-1 text-xs text-gray-400">Esto puede tardar si es la primera sincronización</p>
+                <p className="text-sm text-text-primary">Actualizando publicaciones en MercadoLibre...</p>
+                <p className="mt-1 text-xs text-text-secondary">Esto puede tardar si es la primera sincronización</p>
               </div>
             )}
 
             {/* Done */}
             {state.phase === "done" && (
               <div className="p-6">
-                <h3 className="mb-3 text-base font-semibold text-gray-800">Resultado</h3>
-                <div className="mb-4 max-h-72 overflow-auto rounded border border-gray-200">
-                  <table className="min-w-full divide-y divide-gray-200 text-xs">
-                    <thead className="sticky top-0 bg-gray-50">
+                <h3 className="mb-3 text-base font-semibold text-text-primary">Resultado</h3>
+                <div className="mb-4 max-h-72 overflow-auto rounded-lg border border-border">
+                  <table className="min-w-full divide-y divide-border text-xs">
+                    <thead className="sticky top-0 bg-surface-alt">
                       <tr>
                         {["SKU", "Item ID", "Resultado"].map((h) => (
-                          <th key={h} className="px-3 py-2 text-left font-semibold text-gray-600">{h}</th>
+                          <th key={h} className="px-3 py-2 text-left font-semibold text-text-secondary">{h}</th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-border bg-surface">
                       {state.results.map((r, i) => (
-                        <tr key={i}>
-                          <td className="px-3 py-2 font-mono">{r.sku}</td>
-                          <td className="px-3 py-2 font-mono text-gray-500">{r.item_id ?? "—"}</td>
+                        <tr key={i} className="hover:bg-surface-alt">
+                          <td className="px-3 py-2 font-mono text-text-primary">{r.sku}</td>
+                          <td className="px-3 py-2 font-mono text-text-secondary">{r.item_id ?? "—"}</td>
                           <td className="px-3 py-2">
-                            {r.status === "updated" && <span className="text-green-600 font-medium">Actualizado</span>}
-                            {r.status === "not_found" && <span className="text-yellow-600 font-medium">SKU no encontrado</span>}
+                            {r.status === "updated" && <span className="font-medium text-status-active-fg">Actualizado</span>}
+                            {r.status === "not_found" && <span className="font-medium text-status-paused-fg">SKU no encontrado</span>}
                             {r.status === "error" && (
-                              <span className="text-red-600 font-medium" title={r.error}>Error</span>
+                              <span className="font-medium text-status-closed-fg" title={r.error}>Error</span>
                             )}
                           </td>
                         </tr>
@@ -231,7 +240,9 @@ export default function ImportExcelButton({ onImportDone }: { onImportDone?: () 
                   </table>
                 </div>
                 <div className="flex justify-end">
-                  <button onClick={reset} className="rounded bg-gray-800 px-4 py-1.5 text-sm text-white hover:bg-gray-700">Cerrar</button>
+                  <button onClick={reset} className="rounded-lg bg-ml-blue px-4 py-1.5 text-sm font-medium text-white transition-colors hover:brightness-90">
+                    Cerrar
+                  </button>
                 </div>
               </div>
             )}

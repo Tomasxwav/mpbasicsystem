@@ -13,10 +13,10 @@ const STATUS_LABEL: Record<string, string> = {
 }
 
 const STATUS_CLASS: Record<string, string> = {
-  active: "bg-green-100 text-green-700",
-  paused: "bg-yellow-100 text-yellow-700",
-  closed: "bg-red-100 text-red-600",
-  under_review: "bg-blue-100 text-blue-700",
+  active: "bg-status-active-bg text-status-active-fg",
+  paused: "bg-status-paused-bg text-status-paused-fg",
+  closed: "bg-status-closed-bg text-status-closed-fg",
+  under_review: "bg-status-review-bg text-status-review-fg",
 }
 
 export default function ProductosTable() {
@@ -56,14 +56,15 @@ export default function ProductosTable() {
 
   return (
     <div className="w-full">
-      <div className="mb-4 flex items-center justify-between">
+      {/* Table header row */}
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">Mis publicaciones</h2>
-          <p className="text-sm text-gray-500">Artículos en MercadoLibre</p>
+          <h2 className="text-lg font-semibold text-text-primary">Mis publicaciones</h2>
+          <p className="text-sm text-text-secondary">Artículos en MercadoLibre</p>
         </div>
         <div className="flex items-center gap-3">
           {data && (
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-text-secondary">
               {data.paging.total} publicaciones totales
             </span>
           )}
@@ -71,99 +72,105 @@ export default function ProductosTable() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr className="bg-mercadolibre">
-              {["", "Título", "ID", "SKU", "Precio", "Stock", "Estado", ""].map((col, i) => (
-                <th
-                  key={i}
-                  className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-700"
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100 bg-white">
-            {loading ? (
-              <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">
-                  Cargando publicaciones...
-                </td>
+      {/* Table card */}
+      <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-border">
+            <thead>
+              <tr className="bg-ml-navbar">
+                {["", "Título", "ID", "SKU", "Precio", "Stock", "Estado", ""].map((col, i) => (
+                  <th
+                    key={i}
+                    className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-ml-header-text"
+                  >
+                    {col}
+                  </th>
+                ))}
               </tr>
-            ) : error ? (
-              <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-sm text-red-500">
-                  {error}
-                </td>
-              </tr>
-            ) : data?.items.length === 0 ? (
-              <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">
-                  No hay publicaciones
-                </td>
-              </tr>
-            ) : (
-              data?.items.map((item: MercadoLibreItem, i: number) => (
-                <tr
-                  key={item.id}
-                  className={`transition-colors hover:bg-yellow-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
-                >
-                  <td className="px-4 py-3">
-                    {item.thumbnail && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={item.thumbnail.replace(/^http:/, "https:")}
-                        alt={item.title}
-                        width={48}
-                        height={48}
-                        className="h-12 w-12 rounded object-contain"
-                      />
-                    )}
-                  </td>
-                  <td className="max-w-xs px-4 py-3 text-sm text-gray-800">
-                    <span className="line-clamp-2">{item.title}</span>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-xs font-medium text-gray-500">
-                    {item.id}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-xs text-gray-500">
-                    {(item.attributes.find((a) => a.id === "SELLER_SKU")?.value_name ?? item.seller_custom_field) ?? <span className="text-gray-300">—</span>}
-                  </td>
-                  <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                    {item.currency_id}{" "}
-                    {item.price.toLocaleString("es-MX", { minimumFractionDigits: 2 })}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-gray-700">{item.available_quantity}</td>
-                  <td className="px-4 py-3 text-sm">
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                        STATUS_CLASS[item.status] ?? "bg-gray-100 text-gray-600"
-                      }`}
-                    >
-                      {STATUS_LABEL[item.status] ?? item.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-sm">
-                    <a
-                      href={item.permalink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      Ver
-                    </a>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {loading ? (
+                <tr>
+                  <td colSpan={8} className="px-4 py-10 text-center text-sm text-text-secondary">
+                    Cargando publicaciones...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : error ? (
+                <tr>
+                  <td colSpan={8} className="px-4 py-10 text-center text-sm text-status-closed-fg">
+                    {error}
+                  </td>
+                </tr>
+              ) : data?.items.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="px-4 py-10 text-center text-sm text-text-secondary">
+                    No hay publicaciones
+                  </td>
+                </tr>
+              ) : (
+                data?.items.map((item: MercadoLibreItem, i: number) => (
+                  <tr
+                    key={item.id}
+                    className={`transition-colors hover:bg-surface-alt ${i % 2 === 0 ? "bg-surface" : "bg-surface-alt"}`}
+                  >
+                    <td className="px-4 py-3">
+                      {item.thumbnail && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.thumbnail.replace(/^http:/, "https:")}
+                          alt={item.title}
+                          width={48}
+                          height={48}
+                          className="h-12 w-12 rounded object-contain"
+                        />
+                      )}
+                    </td>
+                    <td className="max-w-xs px-4 py-3 text-sm text-text-primary">
+                      <span className="line-clamp-2">{item.title}</span>
+                    </td>
+                    <td className="px-4 py-3 font-mono text-xs font-medium text-text-secondary">
+                      {item.id}
+                    </td>
+                    <td className="px-4 py-3 font-mono text-xs text-text-secondary">
+                      {(item.attributes.find((a) => a.id === "SELLER_SKU")?.value_name ?? item.seller_custom_field) ?? (
+                        <span className="opacity-30">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-sm font-semibold text-text-primary">
+                      {item.currency_id}{" "}
+                      {item.price.toLocaleString("es-MX", { minimumFractionDigits: 2 })}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-text-primary">{item.available_quantity}</td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                          STATUS_CLASS[item.status] ?? "bg-status-review-bg text-status-review-fg"
+                        }`}
+                      >
+                        {STATUS_LABEL[item.status] ?? item.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-sm">
+                      <a
+                        href={item.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-ml-blue hover:underline"
+                      >
+                        Ver
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
+        {/* Pagination */}
         {data && (
-          <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-4 py-2">
-            <span className="text-xs text-gray-400">
+          <div className="flex items-center justify-between border-t border-border bg-surface-alt px-4 py-2.5">
+            <span className="text-xs text-text-secondary">
               {data.items.length > 0
                 ? `Mostrando ${data.paging.offset + 1}–${data.paging.offset + data.items.length} de ${data.paging.total}`
                 : `0 de ${data.paging.total}`}
@@ -172,14 +179,14 @@ export default function ProductosTable() {
               <button
                 onClick={handlePrev}
                 disabled={loading || data.paging.offset === 0}
-                className="rounded border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-md border border-border bg-surface px-3 py-1 text-xs font-medium text-text-secondary transition-colors hover:border-ml-yellow hover:bg-ml-yellow hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 ← Anterior
               </button>
               <button
                 onClick={handleNext}
                 disabled={loading || data.paging.offset + data.paging.limit >= data.paging.total}
-                className="rounded border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-md border border-border bg-surface px-3 py-1 text-xs font-medium text-text-secondary transition-colors hover:border-ml-yellow hover:bg-ml-yellow hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Siguiente →
               </button>
