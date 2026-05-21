@@ -67,7 +67,7 @@ export default function ProductosTable() {
               {data.paging.total} publicaciones totales
             </span>
           )}
-          <ImportExcelButton />
+          <ImportExcelButton onImportDone={() => fetchItems(offset)} />
         </div>
       </div>
 

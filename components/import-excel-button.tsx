@@ -82,7 +82,7 @@ function parseSheet(file: File): Promise<ImportRow[]> {
   })
 }
 
-export default function ImportExcelButton() {
+export default function ImportExcelButton({ onImportDone }: { onImportDone?: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [state, setState] = useState<State>({ phase: "idle" })
 
@@ -106,6 +106,7 @@ export default function ImportExcelButton() {
       const json = await res.json()
       if (!res.ok) throw new Error(json.error ?? `Error ${res.status}`)
       setState({ phase: "done", results: json.results })
+      onImportDone?.()
     } catch (err) {
       setState({ phase: "error", message: err instanceof Error ? err.message : "Error desconocido" })
     }
