@@ -125,7 +125,7 @@ export default function ProductosTable() {
                         />
                       )}
                     </td>
-                    <td className="max-w-[200px] 2xl:max-w-xs px-2 py-1.5 2xl:px-4 2xl:py-3 text-xs 2xl:text-sm text-text-primary">
+                    <td className="max-w-50 2xl:max-w-xs px-2 py-1.5 2xl:px-4 2xl:py-3 text-xs 2xl:text-sm text-text-primary">
                       <span className="line-clamp-2">{item.title}</span>
                     </td>
                     <td className="px-2 py-1.5 2xl:px-4 2xl:py-3 font-mono text-xs font-medium text-text-secondary">
