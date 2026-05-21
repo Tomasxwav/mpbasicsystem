@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import type { ItemsResponse } from "@/app/api/items/route"
 import type { MercadoLibreItem } from "@/types/meli-item"
+import ImportExcelButton from "@/components/import-excel-button"
 
 const STATUS_LABEL: Record<string, string> = {
   active: "Activo",
@@ -60,11 +61,14 @@ export default function ProductosTable() {
           <h2 className="text-lg font-semibold text-gray-800">Mis publicaciones</h2>
           <p className="text-sm text-gray-500">Artículos en MercadoLibre</p>
         </div>
-        {data && (
-          <span className="text-sm text-gray-500">
-            {data.paging.total} publicaciones totales
-          </span>
-        )}
+        <div className="flex items-center gap-3">
+          {data && (
+            <span className="text-sm text-gray-500">
+              {data.paging.total} publicaciones totales
+            </span>
+          )}
+          <ImportExcelButton />
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
