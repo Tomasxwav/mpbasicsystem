@@ -5,7 +5,7 @@ export default function Home() {
     <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-5 2xl:px-8 2xl:py-6">
 
       {/* Filters placeholder */}
-      <div className="mb-3 h-8 2xl:mb-6 2xl:h-12 rounded-lg border-2 border-dashed border-border" />
+      {/* <div className="mb-3 h-8 2xl:mb-6 2xl:h-12 rounded-lg border-2 border-dashed border-border" /> */}
 
       {/* Products table */}
       <div className="mb-4 2xl:mb-8">
