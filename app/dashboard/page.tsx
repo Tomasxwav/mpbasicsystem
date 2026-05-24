@@ -2,7 +2,7 @@ import ProductosTable from "@/components/productos-table";
 import ProductosTableWarning from '@/components/productos-warning';
 import SellerCard from "@/components/seller-card";
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-5 2xl:px-8 2xl:py-6">
 

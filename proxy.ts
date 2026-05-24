@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { decodeSession } from "@/lib/session"
 
-const PUBLIC_PATHS = new Set(["/login"])
+const PUBLIC_PATHS = new Set(["/login", "/"])
 
 function isPublic(pathname: string): boolean {
   if (PUBLIC_PATHS.has(pathname)) return true
@@ -11,6 +11,10 @@ function isPublic(pathname: string): boolean {
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  if (/\.[a-z0-9]+$/i.test(pathname)) {
+    return NextResponse.next()
+  }
 
   if (isPublic(pathname)) {
     return NextResponse.next()
